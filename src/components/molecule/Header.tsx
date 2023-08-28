@@ -8,10 +8,10 @@ const Header = () => {
 const { t } = useTranslation()
 
   return (
-    <header className="flex flex-col p-6 sm:flex-row">
+    <header className="flex flex-col p-6 md:flex-row">
       <img
         src={Logo}
-        className="mx-auto mb-4 h-8 sm:mx-0 sm:mb-0 sm:mr-10 sm:h-12"
+        className="mx-auto mb-4 h-8 md:mx-0 md:mb-0 md:mr-10 md:h-12"
       />
 
       <div className="flex w-full">
