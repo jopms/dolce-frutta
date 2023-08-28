@@ -3,13 +3,13 @@ import Search from '@/components/atomic/Search'
 import Logo from '@/assets/images/logo.png'
 
 const Header = () => {
-const { t }= useTranslation()
+const { t } = useTranslation()
 
   return (
-    <header className='flex p-6'>
+    <header className="flex p-6">
       <img
         src={Logo}
-        className="h-12 mr-10"
+        className="mr-10 h-12"
       />
 
       <Search placeholder={t('main.search.placeholder')} />
