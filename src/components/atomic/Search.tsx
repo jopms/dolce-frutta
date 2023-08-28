@@ -5,7 +5,7 @@ const Search = (props: { placeholder: string }) => {
   return (
       <Input
         prefix={<SearchOutlined />}
-        className={"bg-gray-200 hover:bg-gray-200 rounded-3xl [&>input]:ml-2"}
+        className={'rounded-3xl bg-gray-100 hover:bg-gray-100 [&>input]:ml-2'}
         placeholder={props.placeholder}
         size="large"
         bordered={false}

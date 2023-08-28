@@ -6,10 +6,10 @@ const Header = () => {
 const { t } = useTranslation()
 
   return (
-    <header className="flex p-6">
+    <header className="flex flex-col p-6 sm:flex-row">
       <img
         src={Logo}
-        className="mr-10 h-12"
+        className="mx-auto mb-4 h-8 w-max sm:mb-0 sm:mr-10 sm:h-12"
       />
 
       <Search placeholder={t('main.search.placeholder')} />
