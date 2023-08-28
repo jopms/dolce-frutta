@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import Search from '@/components/atomic/Search'
 import Logo from '@/assets/images/logo.png'
+import { ShoppingCartOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
 
 const Header = () => {
 const { t } = useTranslation()
@@ -12,7 +14,15 @@ const { t } = useTranslation()
         className="mx-auto mb-4 h-8 w-max sm:mb-0 sm:mr-10 sm:h-12"
       />
 
-      <Search placeholder={t('main.search.placeholder')} />
+      <div className="flex">
+        <Search placeholder={t('main.search.placeholder')} />
+        <Button
+          shape="circle"
+          size={'large'}
+          icon={<ShoppingCartOutlined />}
+          className="ml-3"
+        />
+      </div>
     </header>
 )
 }

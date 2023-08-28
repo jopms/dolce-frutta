@@ -1,6 +1,6 @@
 import Main from '@/components/pages/Main'
 import { HashRouter, Route, Routes } from 'react-router-dom'
-import RouterPath from '@/models/Enums'
+import { RouterPath } from '@/models/Enums'
 import React from 'react'
 
 const App = () => {
