@@ -1,7 +1,12 @@
+import Header from '@/components/molecule/Header'
+
 const Main = () => {
-  const test = 'Main'
   return (
-    <div></div>
+    <div
+      className="max-w-7xl mx-auto"
+    >
+      <Header />
+    </div>
   )
 }
 

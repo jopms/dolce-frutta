@@ -1,20 +1,16 @@
-import { useTranslation } from 'react-i18next'
 import { Input } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
-const Header = () => {
-
-  const { t } = useTranslation()
-
-    return (
+const Search = (props: { placeholder: string }) => {
+  return (
       <Input
         prefix={<SearchOutlined />}
         className={"bg-gray-200 hover:bg-gray-200 rounded-3xl [&>input]:ml-2"}
-        placeholder={t('main.search.placeholder')}
+        placeholder={props.placeholder}
         size="large"
         bordered={false}
       />
     )
 }
 
-export default Header
+export default Search
