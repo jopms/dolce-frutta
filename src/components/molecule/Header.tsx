@@ -11,10 +11,10 @@ const { t } = useTranslation()
     <header className="flex flex-col p-6 sm:flex-row">
       <img
         src={Logo}
-        className="mx-auto mb-4 h-8 w-max sm:mb-0 sm:mr-10 sm:h-12"
+        className="mx-auto mb-4 h-8 sm:mx-0 sm:mb-0 sm:mr-10 sm:h-12"
       />
 
-      <div className="flex">
+      <div className="flex w-full">
         <Search placeholder={t('main.search.placeholder')} />
         <Button
           shape="circle"
