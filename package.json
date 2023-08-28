@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.5",
+    "antd": "^5.8.5",
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.8",
     "react": "^18.2.0",
