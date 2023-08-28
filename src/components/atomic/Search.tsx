@@ -3,10 +3,17 @@ import { SearchOutlined } from '@ant-design/icons'
 import RestApi from '@/api/RestApi'
 import { MAX_RESULTS } from '@/helper/globals'
 import { JSX, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { decrement, increment } from '@/redux/counter/counterSlice'
 
 const Search = (props: { placeholder: string }) => {
   const useRestApi = new RestApi()
   const [products, setProducts] = useState()
+  const count = useSelector((state: any) => state.counter.value)
+  const dispatch = useDispatch()
+
+  const incrementText = 'Increment'
+  const decrementText = 'Decrement'
 
   const renderProducts = (data: Array<any>): JSX.Element => {
     const { Meta } = Card
@@ -54,6 +61,21 @@ const Search = (props: { placeholder: string }) => {
           bordered={false}
           onKeyDown={onInput}
         />
+        <div>
+          <button
+            aria-label="Increment value"
+            onClick={() => dispatch(increment())}
+          >
+            { incrementText }
+          </button>
+          <span>{count}</span>
+          <button
+            aria-label="Decrement value"
+            onClick={() => dispatch(decrement())}
+          >
+            { decrementText }
+          </button>
+        </div>
         {products}
       </>
     )
