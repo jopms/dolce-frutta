@@ -52,7 +52,6 @@ module.exports = {
 		'no-throw-literal': 'error',
 		'no-undef-init': 'error',
 		'no-unused-vars': 'off',
-		'no-undefined': 'error',
 		'no-underscore-dangle': 'error',
 		'no-unneeded-ternary': 'error',
 		'no-unused-expressions': 'error',
