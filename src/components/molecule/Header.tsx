@@ -11,7 +11,7 @@ const { t } = useTranslation()
     <header className="flex flex-col p-6 md:flex-row items-center">
       <img
         src={Logo}
-        className="mx-auto mb-4 h-8 md:mx-0 md:mb-0 md:mr-10 md:h-12"
+        className="mx-auto mb-4 h-16 md:mx-0 md:mb-0 md:mr-10"
       />
 
       <div className="flex w-full">
