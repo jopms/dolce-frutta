@@ -1,11 +1,11 @@
 import { Button, Card, Skeleton } from 'antd'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import ProductFallback from '@/assets/images/product-fallback.svg'
 import { Product } from '@/models/Interfaces'
 
 const ProductCard = (props: { product: Product }) => {
   const {Meta} = Card
-  const imageLoaded = useRef(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
 
   const [add, setAdd] = useState(0)
 
@@ -22,7 +22,7 @@ const ProductCard = (props: { product: Product }) => {
         <img
           alt="example"
           className={`h-44 w-full object-cover ${!imageLoaded ? 'hidden' : ''}`}
-          onLoad={() => imageLoaded.current = true}
+          onLoad={() => setImageLoaded(true)}
           onError={({currentTarget}) => {
             currentTarget.onerror = null
             currentTarget.style.backgroundColor = '#f2f2f2'

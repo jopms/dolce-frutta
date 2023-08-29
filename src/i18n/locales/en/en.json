@@ -3,5 +3,12 @@
     "search": {
       "placeholder": "Fruits, vegetables, etc"
     }
+  },
+  "products": {
+    "filter": {
+      "vendors": {
+        "label": "Vendors filter"
+      }
+    }
   }
 }

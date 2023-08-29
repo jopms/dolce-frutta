@@ -4,8 +4,10 @@ import { Select, SelectProps } from 'antd'
 import { useEffect, useState } from 'react'
 import RestApi from '@/api/RestApi'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 const ProductsOverviewWithFilter = () => {
+  const { t } = useTranslation()
   const count = useSelector((state: any) => state.counter.value as Array<Product>)
   const [filteredProducts, setFilteredProducts] = useState(count)
   const [options, setOptions] = useState([] as SelectProps['options'])
@@ -54,22 +56,35 @@ const ProductsOverviewWithFilter = () => {
   }
 
   return <div className="flex flex-col">
-    {filteredProducts.length > 0 && options && options.length > 0 &&
-      <Select
-        mode="multiple"
-        placeholder="All vendors"
-        options={options}
-        onChange={applyVendorsFilter}
-        filterOption={(input, option) =>
-          String(option?.label).toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
-          String(option?.value).toLowerCase().indexOf(input.toLowerCase()) >= 0
-        }
-      />}
-    {filteredProducts.map((product) =>
-      <ProductCard
-        key={product.id}
-        product={product}
-      />)}
+    {
+      filteredProducts.length > 0 && options && options.length > 0 &&
+      <>
+        <div
+          className="mb-4 ml-6 flex w-96 flex-col"
+        >
+          <span>
+          {t('products.filter.vendors.label')}
+        </span>
+          <Select
+            mode="multiple"
+            placeholder="All vendors"
+            options={options}
+            onChange={applyVendorsFilter}
+            filterOption={(input, option) =>
+              String(option?.label).toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+              String(option?.value).toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+          />
+        </div>
+        <div className="grid min-h-full min-w-full grid-cols-min-max justify-center bg-gray-50">
+          {filteredProducts.map((product) =>
+            <ProductCard
+              key={product.id}
+              product={product}
+            />)}
+        </div>
+      </>
+    }
     </div>
 }
 
