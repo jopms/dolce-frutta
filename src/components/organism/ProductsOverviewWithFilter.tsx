@@ -33,10 +33,8 @@ const ProductsOverviewWithFilter = () => {
             })
           }
         }
-
         setOptions(vendorsArray)
       })
-
     }
   }, [])
 
@@ -55,28 +53,30 @@ const ProductsOverviewWithFilter = () => {
     }
   }
 
-  return <div className="flex flex-col">
+  return <div
+    className="absolute flex w-full flex-col pt-10"
+  >
     {
-      filteredProducts.length > 0 && options && options.length > 0 &&
+      count.length > 0 && options && options.length > 0 &&
       <>
-        <div
-          className="mb-4 ml-6 flex w-96 flex-col"
-        >
+        <div className="w-full">
+          <div className="mx-6 mb-4 flex flex-col xs:w-96">
           <span>
           {t('products.filter.vendors.label')}
         </span>
-          <Select
-            mode="multiple"
-            placeholder="All vendors"
-            options={options}
-            onChange={applyVendorsFilter}
-            filterOption={(input, option) =>
-              String(option?.label).toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
-              String(option?.value).toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          />
+            <Select
+              mode="multiple"
+              placeholder="All vendors"
+              options={options}
+              onChange={applyVendorsFilter}
+              filterOption={(input, option) =>
+                String(option?.label).toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                String(option?.value).toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            />
+          </div>
         </div>
-        <div className="grid min-h-full min-w-full grid-cols-min-max justify-center bg-gray-50">
+        <div className="grid h-full w-full grid-cols-min-max justify-center overflow-scroll ">
           {filteredProducts.map((product) =>
             <ProductCard
               key={product.id}

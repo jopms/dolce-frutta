@@ -11,4 +11,8 @@ interface Product {
   vendors: Array<Vendor>
 }
 
-export type { Product }
+interface BasketProduct extends Omit<Product, 'image_link' | 'vendors'> {
+  amount: number
+}
+
+export type { Product, BasketProduct }

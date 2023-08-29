@@ -1,13 +1,26 @@
 import { Button, Card, Skeleton } from 'antd'
 import { useState } from 'react'
 import ProductFallback from '@/assets/images/product-fallback.svg'
-import { Product } from '@/models/Interfaces'
+import { BasketProduct, Product } from '@/models/Interfaces'
+import { useDispatch } from 'react-redux'
+import { deleteProducts, addProduct } from '@/redux/basket/basketSlice'
 
 const ProductCard = (props: { product: Product }) => {
   const {Meta} = Card
   const [imageLoaded, setImageLoaded] = useState(false)
+  const dispatch = useDispatch()
 
   const [add, setAdd] = useState(0)
+
+  const addOneProduct = (product: Product): void => {
+    setAdd(add + 1)
+    const basketProduct: BasketProduct = { amount: 1, id: product.id, name: product.name, price: product.price }
+    dispatch(addProduct(basketProduct))
+  }
+
+  const removeOneProduct = (): void => {
+    setAdd(add - 1)
+  }
 
   const plus = '+'
   const minus = '-'
@@ -41,10 +54,10 @@ const ProductCard = (props: { product: Product }) => {
           {add}
         </div>
         <div>
-          <Button onClick={() => setAdd(add - 1)}>
+          <Button onClick={removeOneProduct}>
             {minus}
           </Button>
-          <Button onClick={() => setAdd(add + 1)}>
+          <Button onClick={() => addOneProduct(props.product)}>
             {plus}
           </Button>
         </div>
