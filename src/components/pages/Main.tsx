@@ -45,10 +45,10 @@ const Main = () => {
   }
 
   return (
-    <div className="mx-auto max-w-6xl">
+    <div className="h-full">
       <Header />
       <div
-        className={"grid grid-cols-min-max gap-8 px-8"}
+        className="grid grid-cols-min-max gap-8 px-8 bg-gray-50 min-w-full min-h-full"
       >
         {productsRendered()}
       </div>
