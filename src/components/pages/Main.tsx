@@ -21,13 +21,13 @@ const Main = () => {
     return count.map((product: any) =>
       <Card
         key={product.id}
-        className={"h-64 w-64"}
+        className={"h-64 w-full"}
         cover={
           <>
-            {loading && <Skeleton.Image active={true} className={"absolute !w-64 !h-40 bg-white"}/>}
+            {loading && <Skeleton.Image active={true} className={"absolute !w-full !h-40 bg-white"}/>}
             <img
               alt="example"
-              className={`h-40 w-64 object-cover ${loading ? "hidden" : ""}`}
+              className={`h-40 w-full object-cover ${loading ? "hidden" : ""}`}
               onLoad={stopLoading}
               onError={({ currentTarget }) =>
               {
@@ -47,8 +47,11 @@ const Main = () => {
   return (
     <div className="mx-auto max-w-6xl">
       <Header />
-      <span>{count.map.length > 0 && productsRendered()}</span>
-      {loading}
+      <div
+        className={"grid grid-cols-min-max gap-8 px-8"}
+      >
+        {productsRendered()}
+      </div>
     </div>
   )
 }

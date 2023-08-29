@@ -8,9 +8,16 @@ module.exports = {
   },
   theme: {
     extend: {
+      gridTemplateColumns: {
+        ['min-max']: 'repeat(auto-fill, minmax(12rem, 1fr))'
+      },
       fontFamily: {
         primary: ['Karla', 'sans-serif']
-      }
+      },
+      screens: {
+        'xs': '420px',
+        'xxs': '360px'
+      },
     }
   },
   plugins: []
