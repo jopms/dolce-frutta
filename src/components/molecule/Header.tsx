@@ -8,7 +8,7 @@ const Header = () => {
 const { t } = useTranslation()
 
   return (
-    <header className="flex flex-col p-6 md:flex-row items-center max-w-6xl mx-auto">
+    <header className="mx-auto flex max-w-6xl flex-col items-center p-6 md:flex-row">
       <img
         src={Logo}
         className="mx-auto mb-4 h-16 md:mx-0 md:mb-0 md:mr-10"

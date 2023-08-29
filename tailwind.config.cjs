@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        ['min-max']: 'repeat(auto-fill, minmax(12rem, 1fr))'
+        ['min-max']: 'repeat(auto-fill, minmax(16rem, 1fr))'
       },
       fontFamily: {
         primary: ['Karla', 'sans-serif']
