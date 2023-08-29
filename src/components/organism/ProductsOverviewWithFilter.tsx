@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 const ProductsOverviewWithFilter = () => {
   const count = useSelector((state: any) => state.counter.value as Array<Product>)
   const [options, setOptions] = useState([] as SelectProps['options'])
+  const [filteredProducts, setFilteredProducts] = useState(count)
 
   const useRestApi = new RestApi()
 
@@ -37,24 +38,39 @@ const ProductsOverviewWithFilter = () => {
     }
   }, [])
 
-  return <>
-    {options && options.length > 0 &&
+  const applyFilter = (ids: Array<number>): void => {
+    if (ids.length > 0 && count && count.length > 0) {
+      setFilteredProducts(count.filter((product) => {
+        if (product.vendors !== undefined) {
+          return product.vendors.some((vendor) => ids.some((id) => id === vendor.id))
+        }
+        return false
+      }))
+    }
+
+    if (ids.length === 0) {
+      setFilteredProducts(count)
+    }
+  }
+
+  return <div className="flex flex-col">
+    {filteredProducts.length > 0 && options && options.length > 0 &&
       <Select
-        className="h-fit"
         mode="multiple"
         placeholder="All vendors"
         options={options}
+        onChange={applyFilter}
         filterOption={(input, option) =>
           String(option?.label).toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
           String(option?.value).toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
       />}
-    {count.map((product) =>
+    {filteredProducts.map((product) =>
       <ProductCard
         key={product.id}
         product={product}
       />)}
-    </>
+    </div>
 }
 
 export default ProductsOverviewWithFilter

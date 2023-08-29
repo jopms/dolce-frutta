@@ -21,7 +21,7 @@ const ProductCard = (props: { product: Product }) => {
     cover={
       <>
         {loading && <Skeleton.Image active={true}
-                                    className={'absolute !h-40 !w-full bg-white'}/>}
+                                    className={'absolute !h-44 !w-[101%] bg-white'}/>}
         <img
           alt="example"
           className={`h-44 w-full object-cover ${loading ? 'hidden' : ''}`}
