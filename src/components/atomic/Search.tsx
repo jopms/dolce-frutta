@@ -3,7 +3,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import RestApi from '@/api/RestApi'
 import { MAX_RESULTS } from '@/helper/globals'
 import { useDispatch } from 'react-redux'
-import { incrementByAmount } from '@/redux/counter/counterSlice'
+import { setLoading, setProducts } from '@/redux/counter/counterSlice'
 
 const Search = (props: { placeholder: string }) => {
   const useRestApi = new RestApi()
@@ -19,23 +19,20 @@ const Search = (props: { placeholder: string }) => {
         productsWithDescriptions.push(productWithDescription.data)
       }
 
-      dispatch(incrementByAmount(productsWithDescriptions))
+      console.log('going to set it to true!')
+      dispatch(setLoading(true))
+      dispatch(setProducts(productsWithDescriptions))
     }
   }
 
   return (
-      <>
-        <Input
-          prefix={<SearchOutlined />}
-          className={'rounded-3xl bg-gray-100 hover:bg-gray-100 [&>input]:ml-2'}
-          placeholder={props.placeholder}
-          size="large"
-          bordered={false}
-          onKeyDown={onInput}
-        />
-        <div>
-        </div>
-      </>
+      <Input
+        prefix={<SearchOutlined />}
+        className={'rounded-3xl bg-gray-100 hover:bg-gray-100 [&>input]:ml-2'}
+        placeholder={props.placeholder}
+        bordered={false}
+        onKeyDown={onInput}
+      />
     )
 }
 

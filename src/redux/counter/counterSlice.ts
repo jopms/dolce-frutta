@@ -2,16 +2,20 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const counterSlice = createSlice({
   initialState: {
-    value: []
+    value: [],
+    loading: false
   },
   name: 'counter',
   reducers: {
-    incrementByAmount: (state, action) => {
+    setProducts: (state, action) => {
       state.value = action.payload
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload
     }
   }
 })
 
-export const { incrementByAmount } = counterSlice.actions
+export const { setLoading, setProducts } = counterSlice.actions
 
 export default counterSlice.reducer
