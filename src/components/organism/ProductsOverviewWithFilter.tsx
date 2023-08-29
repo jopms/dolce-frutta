@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux'
 
 const ProductsOverviewWithFilter = () => {
   const count = useSelector((state: any) => state.counter.value as Array<Product>)
-  const [options, setOptions] = useState([] as SelectProps['options'])
   const [filteredProducts, setFilteredProducts] = useState(count)
+  const [options, setOptions] = useState([] as SelectProps['options'])
 
   const useRestApi = new RestApi()
 
@@ -38,17 +38,17 @@ const ProductsOverviewWithFilter = () => {
     }
   }, [])
 
-  const applyFilter = (ids: Array<number>): void => {
-    if (ids.length > 0 && count && count.length > 0) {
-      setFilteredProducts(count.filter((product) => {
-        if (product.vendors !== undefined) {
-          return product.vendors.some((vendor) => ids.some((id) => id === vendor.id))
-        }
-        return false
-      }))
-    }
+  useEffect(() => {
+    setFilteredProducts(count)
+  }, [count])
 
-    if (ids.length === 0) {
+  const applyVendorsFilter = (ids: Array<number>): void => {
+    if (ids.length > 0 && count.length > 0) {
+      const idSet = new Set(ids)
+      setFilteredProducts(count.filter((product) =>
+        product.vendors?.some((vendor) => idSet.has(vendor.id))
+      ))
+    } else {
       setFilteredProducts(count)
     }
   }
@@ -59,7 +59,7 @@ const ProductsOverviewWithFilter = () => {
         mode="multiple"
         placeholder="All vendors"
         options={options}
-        onChange={applyFilter}
+        onChange={applyVendorsFilter}
         filterOption={(input, option) =>
           String(option?.label).toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
           String(option?.value).toLowerCase().indexOf(input.toLowerCase()) >= 0

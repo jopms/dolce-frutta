@@ -1,14 +1,11 @@
 import { Button, Card, Skeleton } from 'antd'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import ProductFallback from '@/assets/images/product-fallback.svg'
-import { setLoading } from '@/redux/counter/counterSlice'
-import { useDispatch, useSelector } from 'react-redux'
 import { Product } from '@/models/Interfaces'
 
 const ProductCard = (props: { product: Product }) => {
   const {Meta} = Card
-  const dispatch = useDispatch()
-  const loading = useSelector((state: any) => state.counter.loading)
+  const imageLoaded = useRef(false)
 
   const [add, setAdd] = useState(0)
 
@@ -20,12 +17,12 @@ const ProductCard = (props: { product: Product }) => {
     className={'mx-6 my-4 h-64'}
     cover={
       <>
-        {loading && <Skeleton.Image active={true}
+        {!imageLoaded && <Skeleton.Image active={true}
                                     className={'absolute !h-44 !w-[101%] bg-white'}/>}
         <img
           alt="example"
-          className={`h-44 w-full object-cover ${loading ? 'hidden' : ''}`}
-          onLoad={() => dispatch(setLoading(false))}
+          className={`h-44 w-full object-cover ${!imageLoaded ? 'hidden' : ''}`}
+          onLoad={() => imageLoaded.current = true}
           onError={({currentTarget}) => {
             currentTarget.onerror = null
             currentTarget.style.backgroundColor = '#f2f2f2'
