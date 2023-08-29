@@ -38,8 +38,9 @@ const ProductsOverviewWithFilter = () => {
   }, [])
 
   return <>
-    {(options as any)?.length > 0 &&
+    {options && options.length > 0 &&
       <Select
+        className="h-fit"
         mode="multiple"
         placeholder="All vendors"
         options={options}
