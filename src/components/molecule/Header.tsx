@@ -5,7 +5,7 @@ import { ShoppingCartOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 
 const Header = () => {
-const { t } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <header className="mx-auto flex max-w-6xl flex-col items-center p-6 md:flex-row">

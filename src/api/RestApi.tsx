@@ -25,6 +25,10 @@ export default class RestApi {
     return this.#wrapCall(this.#axiosInstance.get(RestApiEndpoint.products, { params: { limit, search }}))
   }
 
+  public getVendors () {
+    return this.#wrapCall(this.#axiosInstance.get(RestApiEndpoint.vendors))
+  }
+
   public getProduct (id: number) {
     return this.#wrapCall(this.#axiosInstance.get(`${RestApiEndpoint.products}/${String(id)}`))
   }

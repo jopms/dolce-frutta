@@ -19,7 +19,6 @@ const Search = (props: { placeholder: string }) => {
         productsWithDescriptions.push(productWithDescription.data)
       }
 
-      console.log('going to set it to true!')
       dispatch(setLoading(true))
       dispatch(setProducts(productsWithDescriptions))
     }

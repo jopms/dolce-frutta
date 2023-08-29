@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { Product } from '@/models/Interfaces'
 
 export const counterSlice = createSlice({
   initialState: {
-    value: [],
-    loading: false
+    loading: false,
+    value: [] as Array<Product>
   },
   name: 'counter',
   reducers: {
-    setProducts: (state, action) => {
-      state.value = action.payload
-    },
     setLoading: (state, action) => {
       state.loading = action.payload
+    },
+    setProducts: (state, action: { payload: Array<Product> }) => {
+      state.value = action.payload
     }
   }
 })
