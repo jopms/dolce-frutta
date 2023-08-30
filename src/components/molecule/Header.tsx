@@ -16,6 +16,8 @@ const Header = () => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const basketProducts = useSelector((state: { basket: { products : Array<BasketProduct> } }) => state.basket.products)
+  const loading = useSelector((state: { products: { loading: boolean } }) => state.products.loading)
+
   const dispatch = useDispatch()
 
   const showModal = ():void => {
@@ -76,7 +78,10 @@ const Header = () => {
           />
 
           <div className="flex w-full">
-            <Search placeholder={t('main.search.placeholder')} />
+            <Search
+              disabled={loading}
+              placeholder={t('main.search.placeholder')}
+            />
             <Badge count={getBasketSize()}>
               <Button
                 shape="circle"

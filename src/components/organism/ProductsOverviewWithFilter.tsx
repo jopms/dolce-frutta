@@ -64,7 +64,7 @@ const ProductsOverviewWithFilter = () => {
   }
 
   return <div
-    className="absolute flex w-full flex-col pt-10"
+    className="absolute flex max-w-7xl w-full -translate-x-1/2 left-1/2 flex-col pt-10"
   >
     {<Spin className={"absolute"} indicator={antIcon} spinning={loading}>
     {

@@ -5,12 +5,12 @@ import { MAX_RESULTS } from '@/helper/globals'
 import { useDispatch } from 'react-redux'
 import { setLoading, setProducts } from '@/redux/products/productsSlice'
 
-const Search = (props: { placeholder: string }) => {
+const Search = (props: { placeholder: string, disabled: boolean }) => {
   const useRestApi = new RestApi()
   const dispatch = useDispatch()
 
   const onInput = async (e: any): Promise<void> => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !props.disabled) {
       dispatch(setLoading(true))
       const { data } = await useRestApi.getProducts(String(e.target.value), MAX_RESULTS)
       const productsWithDescriptions = []

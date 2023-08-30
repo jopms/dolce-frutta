@@ -7,7 +7,7 @@
   "products": {
     "filter": {
       "vendors": {
-        "label": "Vendors filter"
+        "label": "Vendors"
       }
     }
   },
