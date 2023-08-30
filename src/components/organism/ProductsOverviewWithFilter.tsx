@@ -1,7 +1,7 @@
 import { BasketProduct, Product } from '@/models/Interfaces'
 import ProductCard from '@/components/molecule/ProductCard'
 import { Select, SelectProps, Spin } from 'antd'
-import { useEffect, useState } from 'react'
+import { JSX, useEffect, useState } from 'react'
 import RestApi from '@/api/RestApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +16,7 @@ const ProductsOverviewWithFilter = () => {
   const products = useSelector((state: any) => state.products.value as Array<Product>)
   const basketProducts = useSelector((state: any) => state.basket.products as Array<BasketProduct>)
   const loading = useSelector((state: any) => state.products.loading)
-  const [filteredProducts, setFilteredProducts] = useState(products)
+  const [filters, setFilters] = useState([] as Array<number>)
   const [options, setOptions] = useState([] as SelectProps['options'])
 
   const useRestApi = new RestApi()
@@ -53,7 +53,6 @@ const ProductsOverviewWithFilter = () => {
 
         for (const product of data.products) {
           await useRestApi.getProduct((product as any).id).then((productWithDescription) => {
-            console.log(productWithDescription)
             productsWithDescriptions.push(productWithDescription.data)
           })
         }
@@ -64,24 +63,29 @@ const ProductsOverviewWithFilter = () => {
     }
   }, [])
 
-  useEffect(() => {
-    setFilteredProducts(products)
-  }, [products])
-
-  const applyVendorsFilter = (ids: Array<number>): void => {
-    if (ids.length > 0 && products.length > 0) {
-      const idSet = new Set(ids)
-      setFilteredProducts(products.filter((product) =>
-        product.vendors?.some((vendor) => idSet.has(vendor.id))
-      ))
-    } else {
-      setFilteredProducts(products)
-    }
-  }
-
   const getAmount = (id: number): number => {
     const product = basketProducts.find((p) => p.id === id)
     return product?.amount ?? 0
+  }
+
+  const renderProducts = (): JSX.Element => {
+    let filteredProducts = products
+
+    if (filters.length > 0 && products.length > 0) {
+      const idSet = new Set(filters)
+      filteredProducts = products.filter((product) =>
+        product.vendors?.some((vendor) => idSet.has(vendor.id))
+      )
+    }
+
+    return <>
+      {filteredProducts.map((product) =>
+        <ProductCard
+          key={`${product.name}-${product.id}`}
+          amount={getAmount(product.id)}
+          product={product}
+        />)}
+    </>
   }
 
   return <div
@@ -100,7 +104,7 @@ const ProductsOverviewWithFilter = () => {
               mode="multiple"
               placeholder="All vendors"
               options={options}
-              onChange={applyVendorsFilter}
+              onChange={setFilters}
               filterOption={(input, option) =>
                 String(option?.label).toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
                 String(option?.value).toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -109,12 +113,7 @@ const ProductsOverviewWithFilter = () => {
           </div>
         </div>
         <div className="grid h-full w-full grid-cols-min-max justify-center">
-          {filteredProducts.map((product) =>
-            <ProductCard
-              key={`${product.name}-${product.id}`}
-              amount={getAmount(product.id)}
-              product={product}
-            />)}
+          {renderProducts()}
         </div>
       </>
     }

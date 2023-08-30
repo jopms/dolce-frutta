@@ -1,15 +1,13 @@
-import { Input, Button } from 'antd'
+import { Input } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProducts } from '@/redux/products/productsSlice'
-import { useTranslation } from 'react-i18next'
 import { Product } from '@/models/Interfaces'
 import { useEffect, useState } from 'react'
 import Fuse from 'fuse.js'
 import { debounce } from 'lodash-es'
 
 const Search = (props: { placeholder: string }) => {
-  const { t } = useTranslation()
   const dispatch = useDispatch()
   const products = useSelector((state: any) => state.products.value as Array<Product>)
   const [allProducts, setAllProducts] = useState(products)
@@ -33,7 +31,6 @@ const Search = (props: { placeholder: string }) => {
   }
 
   useEffect(() => {
-    console.log(allProducts)
     if (allProducts.length === 0 && products.length > 0) {
       setAllProducts(products)
     }
