@@ -1,18 +1,22 @@
 import { Product } from '@/models/Interfaces'
 import ProductCard from '@/components/molecule/ProductCard'
-import { Select, SelectProps } from 'antd'
+import { Select, SelectProps, Spin } from 'antd'
 import { useEffect, useState } from 'react'
 import RestApi from '@/api/RestApi'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const ProductsOverviewWithFilter = () => {
   const { t } = useTranslation()
   const products = useSelector((state: any) => state.products.value as Array<Product>)
+  const loading = useSelector((state: any) => state.products.loading)
   const [filteredProducts, setFilteredProducts] = useState(products)
   const [options, setOptions] = useState([] as SelectProps['options'])
 
   const useRestApi = new RestApi()
+
+  const antIcon = <LoadingOutlined style={{ fontSize: 48, color: 'grey' }}  />
 
   useEffect(() => {
     const vendors = [] as any
@@ -56,6 +60,7 @@ const ProductsOverviewWithFilter = () => {
   return <div
     className="absolute flex w-full flex-col pt-10"
   >
+    {<Spin className={"absolute"} indicator={antIcon} spinning={loading}>
     {
       products.length > 0 && options && options.length > 0 &&
       <>
@@ -85,6 +90,7 @@ const ProductsOverviewWithFilter = () => {
         </div>
       </>
     }
+    </Spin>}
     </div>
 }
 

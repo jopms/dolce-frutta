@@ -11,6 +11,7 @@ const Search = (props: { placeholder: string }) => {
 
   const onInput = async (e: any): Promise<void> => {
     if (e.key === 'Enter') {
+      dispatch(setLoading(true))
       const { data } = await useRestApi.getProducts(String(e.target.value), MAX_RESULTS)
       const productsWithDescriptions = []
 
@@ -19,8 +20,8 @@ const Search = (props: { placeholder: string }) => {
         productsWithDescriptions.push(productWithDescription.data)
       }
 
-      dispatch(setLoading(true))
       dispatch(setProducts(productsWithDescriptions))
+      dispatch(setLoading(false))
     }
   }
 
