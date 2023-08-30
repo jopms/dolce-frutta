@@ -39,7 +39,7 @@ const Header = () => {
             <div className="flex">
               <AddAndRemoveButton product={basketProduct as any} amount={basketProduct.amount} />
               <span className="flex w-full" >
-                    <div className="ml-4 flex justify-between w-full">
+                    <div className="ml-4 flex w-full justify-between">
                       <span>{`${basketProduct.amount}x ${basketProduct.name}`}</span>
                       <span>{`${(Number(basketProduct.price) * basketProduct.amount).toFixed(2)}chf`}</span>
                     </div>
