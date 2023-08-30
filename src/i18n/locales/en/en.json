@@ -12,6 +12,9 @@
     },
     "loading": {
       "text": "Picking up your fresh fruits.."
+    },
+    "service": {
+      "fail": "Failed to get products"
     }
   },
   "basket": {

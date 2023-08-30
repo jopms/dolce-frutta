@@ -18,6 +18,7 @@ const ProductsOverviewWithFilter = () => {
   const loading = useSelector((state: any) => state.products.loading)
   const [filters, setFilters] = useState([] as Array<number>)
   const [options, setOptions] = useState([] as SelectProps['options'])
+  const [messageApi, contextHolder] = message.useMessage()
 
   const useRestApi = new RestApi()
 
@@ -59,6 +60,11 @@ const ProductsOverviewWithFilter = () => {
 
         dispatch(setProducts(productsWithDescriptions))
         dispatch(setLoading(false))
+      }).catch(() => {
+        messageApi.open({
+          content: t('products.service.fail'),
+          type: 'error'
+        })
       })
     }
   }, [])
@@ -91,8 +97,8 @@ const ProductsOverviewWithFilter = () => {
   return <div
     className="absolute left-1/2 flex w-full max-w-7xl -translate-x-1/2 flex-col pt-10"
   >
-
-    {<Spin className={'mt-5'} tip={t('products.loading.text')} indicator={antIcon} spinning={true} wrapperClassName="spin-text">
+    {contextHolder}
+    {<Spin className={'mt-5'} tip={t('products.loading.text')} indicator={antIcon} spinning={loading} wrapperClassName="spin-text">
     {
       products.length > 0 && options && options.length > 0 &&
       <>

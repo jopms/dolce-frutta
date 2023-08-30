@@ -14,10 +14,8 @@ export default class RestApi {
   async #wrapCall<T>(service: Promise<T>): Promise<T | any> {
     try {
       return await service
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log(error?.response?.status)
-      }
+    } catch {
+      throw new Error()
     }
   }
 
