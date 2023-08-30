@@ -1,31 +1,43 @@
 import { Input, Button } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
-import RestApi from '@/api/RestApi'
-import { MAX_RESULTS } from '@/helper/globals'
-import { useDispatch } from 'react-redux'
-import { setLoading, setProducts } from '@/redux/products/productsSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { setProducts } from '@/redux/products/productsSlice'
 import { useTranslation } from 'react-i18next'
+import { Product } from '@/models/Interfaces'
+import { useEffect, useState } from 'react'
+import Fuse from 'fuse.js'
+import { debounce } from 'lodash-es'
 
-const Search = (props: { placeholder: string, disabled: boolean }) => {
+const Search = (props: { placeholder: string }) => {
   const { t } = useTranslation()
-  const useRestApi = new RestApi()
   const dispatch = useDispatch()
+  const products = useSelector((state: any) => state.products.value as Array<Product>)
+  const [allProducts, setAllProducts] = useState(products)
 
-  const onInput = async (e: any): Promise<void> => {
-    if (e.key === 'Enter' && !props.disabled) {
-      dispatch(setLoading(true))
-      const { data } = await useRestApi.getProducts(String(e.target.value), MAX_RESULTS)
-      const productsWithDescriptions = []
+  const options = {
+    keys: ['name'],
+    threshold: 0.4
+  }
 
-      for (const product of data.products) {
-        const productWithDescription = await useRestApi.getProduct((product as any).id)
-        productsWithDescriptions.push(productWithDescription.data)
+  const onInput = (e: any): void => {
+    if (allProducts.length > 0) {
+      if (e.target.value.trim() === '') {
+        dispatch(setProducts(allProducts))
+        return
       }
 
-      dispatch(setProducts(productsWithDescriptions))
-      dispatch(setLoading(false))
+      const fuse = new Fuse(allProducts, options)
+      const filteredProducts = fuse.search(e.target.value.trim()).map((p) => p.item) as unknown as Array<Product>
+      dispatch(setProducts(filteredProducts))
     }
   }
+
+  useEffect(() => {
+    console.log(allProducts)
+    if (allProducts.length === 0 && products.length > 0) {
+      setAllProducts(products)
+    }
+  },[products])
 
   return (
       <>
@@ -34,7 +46,7 @@ const Search = (props: { placeholder: string, disabled: boolean }) => {
           className={'rounded-3xl bg-gray-100 hover:bg-gray-100 [&>input]:ml-2'}
           placeholder={props.placeholder}
           bordered={false}
-          onKeyDown={onInput}
+          onKeyUp={debounce(onInput, 200)}
         />
         <Button>
           {t('main.search.showAll')}

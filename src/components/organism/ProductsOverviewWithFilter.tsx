@@ -3,12 +3,16 @@ import ProductCard from '@/components/molecule/ProductCard'
 import { Select, SelectProps, Spin } from 'antd'
 import { useEffect, useState } from 'react'
 import RestApi from '@/api/RestApi'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { LoadingOutlined } from '@ant-design/icons'
+import { MAX_RESULTS } from '@/helper/globals'
+import { setLoading, setProducts } from '@/redux/products/productsSlice'
 
 const ProductsOverviewWithFilter = () => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
+
   const products = useSelector((state: any) => state.products.value as Array<Product>)
   const basketProducts = useSelector((state: any) => state.basket.products as Array<BasketProduct>)
   const loading = useSelector((state: any) => state.products.loading)
@@ -17,7 +21,7 @@ const ProductsOverviewWithFilter = () => {
 
   const useRestApi = new RestApi()
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 48, color: 'grey' }}  />
+  const antIcon = <LoadingOutlined style={{ fontSize: 48, color: 'grey' }} />
 
   useEffect(() => {
     const vendors = [] as any
@@ -41,6 +45,23 @@ const ProductsOverviewWithFilter = () => {
         setOptions(vendorsArray)
       })
     }
+
+    if (products.length === 0) {
+      dispatch(setLoading(true))
+      void useRestApi.getProducts('', MAX_RESULTS).then(async ({data}) => {
+        const productsWithDescriptions = [] as Array<Product>
+
+        for (const product of data.products) {
+          await useRestApi.getProduct((product as any).id).then((productWithDescription) => {
+            console.log(productWithDescription)
+            productsWithDescriptions.push(productWithDescription.data)
+          })
+        }
+
+        dispatch(setProducts(productsWithDescriptions))
+        dispatch(setLoading(false))
+      })
+    }
   }, [])
 
   useEffect(() => {
@@ -59,14 +80,14 @@ const ProductsOverviewWithFilter = () => {
   }
 
   const getAmount = (id: number): number => {
-    const product = basketProducts.find((product) => product.id === id);
+    const product = basketProducts.find((p) => p.id === id)
     return product?.amount ?? 0
   }
 
   return <div
-    className="absolute flex max-w-7xl w-full -translate-x-1/2 left-1/2 flex-col pt-10"
+    className="absolute left-1/2 flex w-full max-w-7xl -translate-x-1/2 flex-col pt-10"
   >
-    {<Spin className={"absolute"} indicator={antIcon} spinning={loading}>
+    {<Spin className={'absolute'} indicator={antIcon} spinning={loading}>
     {
       products.length > 0 && options && options.length > 0 &&
       <>
@@ -90,7 +111,7 @@ const ProductsOverviewWithFilter = () => {
         <div className="grid h-full w-full grid-cols-min-max justify-center">
           {filteredProducts.map((product) =>
             <ProductCard
-              key={product.id}
+              key={`${product.name}-${product.id}`}
               amount={getAmount(product.id)}
               product={product}
             />)}
