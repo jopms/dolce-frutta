@@ -1,4 +1,4 @@
-import { Product } from '@/models/Interfaces'
+import { BasketProduct, Product } from '@/models/Interfaces'
 import ProductCard from '@/components/molecule/ProductCard'
 import { Select, SelectProps, Spin } from 'antd'
 import { useEffect, useState } from 'react'
@@ -10,6 +10,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 const ProductsOverviewWithFilter = () => {
   const { t } = useTranslation()
   const products = useSelector((state: any) => state.products.value as Array<Product>)
+  const basketProducts = useSelector((state: any) => state.basket.products as Array<BasketProduct>)
   const loading = useSelector((state: any) => state.products.loading)
   const [filteredProducts, setFilteredProducts] = useState(products)
   const [options, setOptions] = useState([] as SelectProps['options'])
@@ -57,6 +58,11 @@ const ProductsOverviewWithFilter = () => {
     }
   }
 
+  const getAmount = (id: number): number => {
+    const product = basketProducts.find((product) => product.id === id);
+    return product?.amount ?? 0
+  }
+
   return <div
     className="absolute flex w-full flex-col pt-10"
   >
@@ -85,6 +91,7 @@ const ProductsOverviewWithFilter = () => {
           {filteredProducts.map((product) =>
             <ProductCard
               key={product.id}
+              amount={getAmount(product.id)}
               product={product}
             />)}
         </div>

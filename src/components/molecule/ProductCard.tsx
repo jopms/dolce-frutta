@@ -3,9 +3,10 @@ import { useState } from 'react'
 import ProductFallback from '@/assets/images/product-fallback.svg'
 import { BasketProduct, Product } from '@/models/Interfaces'
 import { useDispatch } from 'react-redux'
-import { deleteProducts, addProduct } from '@/redux/basket/basketSlice'
+import { removeProduct, addProduct } from '@/redux/basket/basketSlice'
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
 
-const ProductCard = (props: { product: Product }) => {
+const ProductCard = (props: { product: Product, amount: number }) => {
   const {Meta} = Card
   const [imageLoaded, setImageLoaded] = useState(false)
   const dispatch = useDispatch()
@@ -18,12 +19,11 @@ const ProductCard = (props: { product: Product }) => {
     dispatch(addProduct(basketProduct))
   }
 
-  const removeOneProduct = (): void => {
+  const removeOneProduct = (product: Product): void => {
     setAdd(add - 1)
+    const basketProduct: BasketProduct = { amount: -1, id: product.id, name: product.name, price: product.price }
+    dispatch(removeProduct(basketProduct))
   }
-
-  const plus = '+'
-  const minus = '-'
 
   return <Card
     size="small"
@@ -51,15 +51,11 @@ const ProductCard = (props: { product: Product }) => {
             title={props.product.name}/>
       <div className="flex flex-col">
         <div className="mx-auto">
-          {add}
+          {props.amount}
         </div>
         <div>
-          <Button onClick={removeOneProduct}>
-            {minus}
-          </Button>
-          <Button onClick={() => addOneProduct(props.product)}>
-            {plus}
-          </Button>
+          <Button size="small" shape="circle" icon={<MinusOutlined />} onClick={() => removeOneProduct(props.product)} />
+          <Button size="small" shape="circle" icon={<PlusOutlined />} onClick={() => addOneProduct(props.product)} />
         </div>
       </div>
     </div>
