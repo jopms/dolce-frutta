@@ -48,9 +48,6 @@ const Search = (props: { placeholder: string }) => {
           bordered={false}
           onKeyUp={debounce(onInput, 200)}
         />
-        <Button>
-          {t('main.search.showAll')}
-        </Button>
       </>
     )
 }
