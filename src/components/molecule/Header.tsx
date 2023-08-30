@@ -79,7 +79,6 @@ const Header = () => {
 
           <div className="flex w-full">
             <Search
-              disabled={loading}
               placeholder={t('main.search.placeholder')}
             />
             <Badge count={getBasketSize()}>
