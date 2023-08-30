@@ -10,5 +10,9 @@
         "label": "Vendors filter"
       }
     }
+  },
+  "basket": {
+    "title": "Basket",
+    "empty": "Add items to start a cart"
   }
 }
