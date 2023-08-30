@@ -23,7 +23,7 @@ const AddAndRemoveButton = (props: { product: Product, amount: number }) => {
   }
 
   return <div className="flex">
-          <Button size="small" shape="circle" icon={<MinusOutlined />} onClick={() => removeOneProduct(props.product)} />
+          <Button className="mr-1" size="small" shape="circle" icon={<MinusOutlined />} onClick={() => removeOneProduct(props.product)} />
           <Button size="small" shape="circle" icon={<PlusOutlined />} onClick={() => addOneProduct(props.product)} />
         </div>
 }
