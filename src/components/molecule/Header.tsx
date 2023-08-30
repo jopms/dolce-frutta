@@ -11,12 +11,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { restoreProductsFromLocalStorage } from '@/redux/basket/basketSlice'
 import { BasketProduct } from '@/models/Interfaces'
 import { LocalStorage } from '@/models/Enums'
+import AddAndRemoveButton from '@/components/molecule/AddAndRemoveButton'
 
 const Header = () => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const basketProducts = useSelector((state: { basket: { products : Array<BasketProduct> } }) => state.basket.products)
-  const loading = useSelector((state: { products: { loading: boolean } }) => state.products.loading)
 
   const dispatch = useDispatch()
 
@@ -33,19 +33,27 @@ const Header = () => {
 
     return <div className="my-6 min-h-[5rem]">
       {total > 0 ?
-        (<>
+        <>
           <div>
           {basketProducts.map((basketProduct: BasketProduct, i) => <div key={basketProduct.id}>
-                <span className="flex justify-between">
-                    <span>{`${basketProduct.amount}x ${basketProduct.name}`}</span>
-                    <span>{`${(Number(basketProduct.price) * basketProduct.amount).toFixed(2)}chf`}</span>
+            <div className="flex">
+              <AddAndRemoveButton product={basketProduct as any} amount={basketProduct.amount} />
+              <span className="flex w-full" >
+                    <div className="ml-4 flex justify-between w-full">
+                      <span>{`${basketProduct.amount}x ${basketProduct.name}`}</span>
+                      <span>{`${(Number(basketProduct.price) * basketProduct.amount).toFixed(2)}chf`}</span>
+                    </div>
                 </span>
-              {i < basketProducts.length - 1 && <Divider className="my-1"/>}
+            </div>
+              {i < basketProducts.length - 1 && <Divider className="my-3"/>}
             </div>
           )}
         </div>
-        <span className="mt-8 flex justify-between">{'Total: '}<b>{`${total.toFixed(2)}chf`}</b></span>
-        </>) :
+          <div className="mt-10">
+            <Divider className="my-3"/>
+            <span className="flex justify-between">{'Total: '}<b>{`${total.toFixed(2)}chf`}</b></span>
+          </div>
+        </> :
         <div className="flex flex-col justify-center">
           <img className="h-24" src={EmptyBasket} alt="empty basker" />
           <span className="mx-auto mt-4 text-[1rem]">{t('basket.empty')}</span>

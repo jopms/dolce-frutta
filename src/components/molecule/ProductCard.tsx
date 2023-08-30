@@ -6,6 +6,7 @@ import { BasketProduct, Product } from '@/models/Interfaces'
 import { useDispatch } from 'react-redux'
 import { removeProduct, addProduct } from '@/redux/basket/basketSlice'
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
+import AddAndRemoveButton from '@/components/molecule/AddAndRemoveButton'
 
 const ProductCard = (props: { product: Product, amount: number }) => {
   const {Meta} = Card
@@ -54,10 +55,7 @@ const ProductCard = (props: { product: Product, amount: number }) => {
         <div className="mx-auto">
           {props.amount}
         </div>
-        <div>
-          <Button size="small" shape="circle" icon={<MinusOutlined />} onClick={() => removeOneProduct(props.product)} />
-          <Button size="small" shape="circle" icon={<PlusOutlined />} onClick={() => addOneProduct(props.product)} />
-        </div>
+        <AddAndRemoveButton product={props.product} amount={props.amount} />
       </div>
     </div>
   </Card>
