@@ -19,15 +19,20 @@ export default class RestApi {
     }
   }
 
-  public getProducts (search: string, limit: string) {
-    return this.#wrapCall(this.#axiosInstance.get(RestApiEndpoint.products, { params: { limit, search }}))
+  public getProducts(search: string, limit: string) {
+    return this.#wrapCall(this.#axiosInstance.get(RestApiEndpoint.products, {
+      params: {
+        limit,
+        search
+      }
+    }))
   }
 
-  public getVendors () {
+  public getVendors() {
     return this.#wrapCall(this.#axiosInstance.get(RestApiEndpoint.vendors))
   }
 
-  public getProduct (id: number) {
+  public getProduct(id: number) {
     return this.#wrapCall(this.#axiosInstance.get(`${RestApiEndpoint.products}/${String(id)}`))
   }
 }

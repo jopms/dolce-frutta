@@ -15,4 +15,4 @@ interface BasketProduct extends Omit<Product, 'image_link' | 'vendors'> {
   amount: number
 }
 
-export type { Product, BasketProduct }
+export type { Product, BasketProduct, Vendor }

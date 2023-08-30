@@ -1,4 +1,4 @@
-import { BasketProduct, Product } from '@/models/Interfaces'
+import { BasketProduct, Product, Vendor } from '@/models/Interfaces'
 import ProductCard from '@/components/molecule/ProductCard'
 import { Select, SelectProps, Spin, message } from 'antd'
 import { JSX, useEffect, useState } from 'react'
@@ -13,37 +13,37 @@ const ProductsOverviewWithFilter = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
-  const products = useSelector((state: any) => state.products.value as Array<Product>)
-  const basketProducts = useSelector((state: any) => state.basket.products as Array<BasketProduct>)
-  const loading = useSelector((state: any) => state.products.loading)
+  const products = useSelector((state: { products: { value: Array<Product> } }) => state.products.value)
+  const basketProducts = useSelector((state: { basket: { products: Array<BasketProduct> } }) => state.basket.products)
+  const loading = useSelector((state: { products: { loading: boolean } }) => state.products.loading)
   const [filters, setFilters] = useState([] as Array<number>)
   const [options, setOptions] = useState([] as SelectProps['options'])
   const [messageApi, contextHolder] = message.useMessage()
 
   const useRestApi = new RestApi()
 
-  const antIcon = <LoadingOutlined style={{ color: 'grey', fontSize: 48 }} />
+  const antIcon = <LoadingOutlined style={{color: 'grey', fontSize: 48}}/>
 
   useEffect(() => {
-    const vendors = [] as any
+    const vendors = [] as Array<Vendor>
 
     if (vendors.length === 0) {
-      void useRestApi.getVendors().then(({ data }: any) => {
+      void useRestApi.getVendors().then(({data}) => {
         if (vendors.length === 0) {
           vendors.push(...data.vendors)
         }
 
-        const vendorsArray = [] as any
+        const vendorsOptions = [] as SelectProps['options']
 
         for (let i = 0; i < vendors.length; i++) {
           if (options !== undefined) {
-            vendorsArray.push({
+            vendorsOptions?.push({
               label: vendors[i].name,
               value: vendors[i].id
             })
           }
         }
-        setOptions(vendorsArray)
+        setOptions(vendorsOptions)
       })
     }
 
@@ -53,7 +53,7 @@ const ProductsOverviewWithFilter = () => {
         const productsWithDescriptions = [] as Array<Product>
 
         for (const product of data.products) {
-          await useRestApi.getProduct((product as any).id).then((productWithDescription) => {
+          await useRestApi.getProduct(product.id).then((productWithDescription) => {
             productsWithDescriptions.push(productWithDescription.data)
           })
         }
@@ -98,34 +98,39 @@ const ProductsOverviewWithFilter = () => {
     className="absolute left-1/2 flex w-full max-w-7xl -translate-x-1/2 flex-col pt-10"
   >
     {contextHolder}
-    {<Spin className={'mt-5'} tip={t('products.loading.text')} indicator={antIcon} spinning={loading} wrapperClassName="spin-text">
-    {
-      products.length > 0 && options && options.length > 0 &&
-      <>
-        <div className="w-full">
-          <div className="mx-6 mb-4 flex flex-col xs:w-96">
-          <span>
-          {t('products.filter.vendors.label')}
-        </span>
-            <Select
-              mode="multiple"
-              placeholder="All vendors"
-              options={options}
-              onChange={setFilters}
-              filterOption={(input, option) =>
-                String(option?.label).toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
-                String(option?.value).toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-            />
+    {<Spin
+      className={'mt-5'}
+      tip={t('products.loading.text')}
+      indicator={antIcon} spinning={loading}
+      wrapperClassName="spin-text"
+    >
+      {
+        products.length > 0 && options && options.length > 0 &&
+        <>
+          <div className="w-full">
+            <div className="mx-6 mb-4 flex flex-col xs:w-96">
+            <span>
+              {t('products.filter.vendors.label')}
+            </span>
+              <Select
+                mode="multiple"
+                placeholder="All vendors"
+                options={options}
+                onChange={setFilters}
+                filterOption={(input, option) =>
+                  String(option?.label).toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                  String(option?.value).toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+              />
+            </div>
           </div>
-        </div>
-        <div className="grid h-full w-full grid-cols-min-max justify-center">
-          {renderProducts()}
-        </div>
-      </>
-    }
+          <div className="grid h-full w-full grid-cols-min-max justify-center">
+            {renderProducts()}
+          </div>
+        </>
+      }
     </Spin>}
-    </div>
+  </div>
 }
 
 export default ProductsOverviewWithFilter

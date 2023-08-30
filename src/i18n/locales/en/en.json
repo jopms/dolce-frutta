@@ -19,6 +19,7 @@
   },
   "basket": {
     "title": "Basket",
-    "empty": "Add items to start a cart"
+    "empty": "Add items to start a cart",
+    "total": "Total:"
   }
 }

@@ -9,7 +9,7 @@ const App = () => {
       <Routes>
         <Route
           path={RouterPath.base}
-          element={<Main />}
+          element={<Main/>}
         />
       </Routes>
     </HashRouter>
