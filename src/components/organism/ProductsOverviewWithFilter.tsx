@@ -21,7 +21,7 @@ const ProductsOverviewWithFilter = () => {
 
   const useRestApi = new RestApi()
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 48, color: 'grey' }} />
+  const antIcon = <LoadingOutlined style={{ color: 'grey', fontSize: 48 }} />
 
   useEffect(() => {
     const vendors = [] as any
