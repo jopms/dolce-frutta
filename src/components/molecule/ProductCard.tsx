@@ -1,5 +1,6 @@
 import { Button, Card, Skeleton } from 'antd'
 import { useState } from 'react'
+// @ts-ignore
 import ProductFallback from '@/assets/images/product-fallback.svg'
 import { BasketProduct, Product } from '@/models/Interfaces'
 import { useDispatch } from 'react-redux'

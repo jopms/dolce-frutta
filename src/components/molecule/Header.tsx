@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import Search from '@/components/atomic/Search'
+// @ts-ignore
 import Logo from '@/assets/images/logo.png'
+// @ts-ignore
 import EmptyBasket from '@/assets/images/empty-basket.svg'
 import { ShoppingCartOutlined } from '@ant-design/icons'
 import { Button, Modal, Divider, Badge } from 'antd'
