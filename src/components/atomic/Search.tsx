@@ -3,7 +3,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import RestApi from '@/api/RestApi'
 import { MAX_RESULTS } from '@/helper/globals'
 import { useDispatch } from 'react-redux'
-import { setLoading, setProducts } from '@/redux/counter/counterSlice'
+import { setLoading, setProducts } from '@/redux/products/productsSlice'
 
 const Search = (props: { placeholder: string }) => {
   const useRestApi = new RestApi()

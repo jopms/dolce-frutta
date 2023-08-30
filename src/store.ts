@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import basketReducer from '@/redux/basket/basketSlice'
-import counterReducer from '@/redux/counter/counterSlice'
+import productsReducer from '@/redux/products/productsSlice'
 
 export default configureStore({
   reducer: {
     basket: basketReducer,
-    counter: counterReducer
+    products: productsReducer
   }
 })

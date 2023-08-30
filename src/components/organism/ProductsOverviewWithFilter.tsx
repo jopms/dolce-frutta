@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next'
 
 const ProductsOverviewWithFilter = () => {
   const { t } = useTranslation()
-  const count = useSelector((state: any) => state.counter.value as Array<Product>)
-  const [filteredProducts, setFilteredProducts] = useState(count)
+  const products = useSelector((state: any) => state.products.value as Array<Product>)
+  const [filteredProducts, setFilteredProducts] = useState(products)
   const [options, setOptions] = useState([] as SelectProps['options'])
 
   const useRestApi = new RestApi()
@@ -39,17 +39,17 @@ const ProductsOverviewWithFilter = () => {
   }, [])
 
   useEffect(() => {
-    setFilteredProducts(count)
-  }, [count])
+    setFilteredProducts(products)
+  }, [products])
 
   const applyVendorsFilter = (ids: Array<number>): void => {
-    if (ids.length > 0 && count.length > 0) {
+    if (ids.length > 0 && products.length > 0) {
       const idSet = new Set(ids)
-      setFilteredProducts(count.filter((product) =>
+      setFilteredProducts(products.filter((product) =>
         product.vendors?.some((vendor) => idSet.has(vendor.id))
       ))
     } else {
-      setFilteredProducts(count)
+      setFilteredProducts(products)
     }
   }
 
@@ -57,7 +57,7 @@ const ProductsOverviewWithFilter = () => {
     className="absolute flex w-full flex-col pt-10"
   >
     {
-      count.length > 0 && options && options.length > 0 &&
+      products.length > 0 && options && options.length > 0 &&
       <>
         <div className="w-full">
           <div className="mx-6 mb-4 flex flex-col xs:w-96">
@@ -76,7 +76,7 @@ const ProductsOverviewWithFilter = () => {
             />
           </div>
         </div>
-        <div className="grid h-full w-full grid-cols-min-max justify-center overflow-scroll ">
+        <div className="grid h-full w-full grid-cols-min-max justify-center">
           {filteredProducts.map((product) =>
             <ProductCard
               key={product.id}
