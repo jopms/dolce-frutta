@@ -5,9 +5,12 @@ Savor daily imports, explore flavors, and experience Italy's bounty, all in a se
 
 Try the hosted version [here](https://dolce-frutta.netlify.app/).
 ## Product Explanation
-Upon landing on the platform, the products and vendors are fetched.
+Upon landing on the platform, the products and vendors are fetched. After the list of all products is fetched, the products are fetched one by one, to get the aditional data like image, and product vendor's. Overall this is not the best design, but needs to be done like this due to the API design.
+
 With the search bar you can search through the selection of products. The vendors selector serves as a filter, allowing you to focus in the items that resonate with your preferences.
+
 You can also add and remove items from your basket, which remains persistently accessible within your browser.
+
 All the implementations were done taking into consideration the business aspect, with focus on mantaining a clean design.
 
 ## Tech Stacks
