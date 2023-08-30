@@ -1,13 +1,13 @@
-import { BasketProduct, Product, Vendor } from '@/models/Interfaces'
-import ProductCard from '@/components/molecule/ProductCard'
-import { Select, SelectProps, Spin, message } from 'antd'
 import { JSX, useEffect, useState } from 'react'
-import RestApi from '@/api/RestApi'
-import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { LoadingOutlined } from '@ant-design/icons'
-import { MAX_RESULTS } from '@/helper/globals'
+import { useDispatch, useSelector } from 'react-redux'
 import { setLoading, setProducts } from '@/redux/products/productsSlice'
+import { Select, SelectProps, Spin, message } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+import ProductCard from '@/components/molecule/ProductCard'
+import { BasketProduct, Product, Vendor } from '@/models/Interfaces'
+import RestApi from '@/api/RestApi'
+import { MAX_RESULTS } from '@/helper/globals'
 
 const ProductsOverviewWithFilter = () => {
   const { t } = useTranslation()
@@ -114,7 +114,7 @@ const ProductsOverviewWithFilter = () => {
             </span>
               <Select
                 mode="multiple"
-                placeholder="All vendors"
+                placeholder={t('products.filter.vendors.placeholder')}
                 options={options}
                 onChange={setFilters}
                 filterOption={(input, option) =>
