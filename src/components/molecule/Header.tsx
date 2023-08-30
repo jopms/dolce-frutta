@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import Search from '@/components/atomic/Search'
 import Logo from '@/assets/images/logo.png'
 import { ShoppingCartOutlined } from '@ant-design/icons'
-import { Button, Modal, Divider } from 'antd'
+import { Button, Modal, Divider, Badge } from 'antd'
 import { JSX, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { BasketProduct } from '@/models/Interfaces'
@@ -38,6 +38,8 @@ const Header = () => {
     </div>
   }
 
+  const getBasketSize = (): number => basketProducts.reduce((a, c) => a + c.amount, 0)
+
   return (
     <>
       <header className="sticky top-0 z-10 w-full bg-white shadow-sm">
@@ -49,13 +51,15 @@ const Header = () => {
 
           <div className="flex w-full">
             <Search placeholder={t('main.search.placeholder')} />
-            <Button
-              shape="circle"
-              size="large"
-              icon={<ShoppingCartOutlined />}
-              className="ml-3"
-              onClick={showModal}
-            />
+            <Badge count={getBasketSize()}>
+              <Button
+                shape="circle"
+                size="large"
+                icon={<ShoppingCartOutlined />}
+                className="ml-3"
+                onClick={showModal}
+              />
+            </Badge>
           </div>
         </div>
       </header>
