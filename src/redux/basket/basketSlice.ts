@@ -17,6 +17,11 @@ export const basketSlice = createSlice({
 
       productToUpdate.amount += payload.amount
     },
+    restoreProductsFromLocalStorage: ({ products }, { payload }: { payload: Array<BasketProduct>}): void => {
+      payload.forEach((product) => {
+        products.push(product)
+      })
+    },
     removeProduct: ({ products }, { payload }: { payload: BasketProduct}): void => {
       const indexProductToUpdate = products.findIndex((product) => product.id === payload.id)
       const productToUpdate = products[indexProductToUpdate]
@@ -34,13 +39,6 @@ export const basketSlice = createSlice({
   }
 })
 
-export const { removeProduct, addProduct } = basketSlice.actions
+export const { removeProduct, addProduct, restoreProductsFromLocalStorage} = basketSlice.actions
 
 export default basketSlice.reducer
-
-const selectProducts = (state: any) => state.products
-
-const selectSum = createSelector(
-  selectProducts,
-  (products) => products
-)

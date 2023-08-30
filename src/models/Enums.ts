@@ -3,8 +3,13 @@ enum RouterPath {
 }
 
 enum RestApiEndpoint {
-  products= 'https://api.predic8.de/shop/v2/products',
-  vendors= 'https://api.predic8.de/shop/v2/vendors',
+  products = 'https://api.predic8.de/shop/v2/products',
+  vendors = 'https://api.predic8.de/shop/v2/vendors',
 }
 
-export { RouterPath, RestApiEndpoint }
+enum LocalStorage {
+  prefix = '[DolceFrutta]-',
+  basketStore = 'basket'
+}
+
+export { RouterPath, RestApiEndpoint, LocalStorage }

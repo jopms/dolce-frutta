@@ -4,14 +4,17 @@ import Logo from '@/assets/images/logo.png'
 import EmptyBasket from '@/assets/images/empty-basket.svg'
 import { ShoppingCartOutlined } from '@ant-design/icons'
 import { Button, Modal, Divider, Badge } from 'antd'
-import { JSX, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { JSX, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { restoreProductsFromLocalStorage } from '@/redux/basket/basketSlice'
 import { BasketProduct } from '@/models/Interfaces'
+import { LocalStorage } from '@/models/Enums'
 
 const Header = () => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const basketProducts = useSelector((state: { basket: { products : Array<BasketProduct> } }) => state.basket.products)
+  const dispatch = useDispatch()
 
   const showModal = ():void => {
     setOpen(true)
@@ -47,6 +50,19 @@ const Header = () => {
   }
 
   const getBasketSize = (): number => basketProducts.reduce((a, c) => a + c.amount, 0)
+
+  useEffect(() => {
+    const persistedBasket = localStorage.getItem(`${LocalStorage.prefix}${LocalStorage.basketStore}`)
+
+    if (persistedBasket !== null && basketProducts.length === 0) {
+      const basket = JSON.parse(persistedBasket)
+      dispatch(restoreProductsFromLocalStorage(basket))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem(`${LocalStorage.prefix}${LocalStorage.basketStore}`, JSON.stringify(basketProducts))
+  }, [basketProducts])
 
   return (
     <>
