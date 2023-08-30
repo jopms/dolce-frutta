@@ -1,7 +1,9 @@
 {
   "main": {
     "search": {
-      "placeholder": "Fruits, vegetables, etc"
+      "placeholder": "Fruits, vegetables, etc",
+      "showAll": "Show all products",
+      "search": "Search product"
     }
   },
   "products": {
