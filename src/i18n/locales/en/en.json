@@ -9,6 +9,9 @@
       "vendors": {
         "label": "Vendors"
       }
+    },
+    "loading": {
+      "text": "Picking up your fresh fruits.."
     }
   },
   "basket": {

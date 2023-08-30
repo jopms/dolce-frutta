@@ -1,6 +1,6 @@
 import { BasketProduct, Product } from '@/models/Interfaces'
 import ProductCard from '@/components/molecule/ProductCard'
-import { Select, SelectProps, Spin } from 'antd'
+import { Select, SelectProps, Spin, message } from 'antd'
 import { JSX, useEffect, useState } from 'react'
 import RestApi from '@/api/RestApi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -91,7 +91,8 @@ const ProductsOverviewWithFilter = () => {
   return <div
     className="absolute left-1/2 flex w-full max-w-7xl -translate-x-1/2 flex-col pt-10"
   >
-    {<Spin className={'absolute'} indicator={antIcon} spinning={loading}>
+
+    {<Spin className={'mt-5'} tip={t('products.loading.text')} indicator={antIcon} spinning={true} wrapperClassName="spin-text">
     {
       products.length > 0 && options && options.length > 0 &&
       <>

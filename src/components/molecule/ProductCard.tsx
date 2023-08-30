@@ -2,30 +2,12 @@ import { Button, Card, Skeleton } from 'antd'
 import { useState } from 'react'
 // @ts-ignore
 import ProductFallback from '@/assets/images/product-fallback.svg'
-import { BasketProduct, Product } from '@/models/Interfaces'
-import { useDispatch } from 'react-redux'
-import { removeProduct, addProduct } from '@/redux/basket/basketSlice'
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
+import { Product } from '@/models/Interfaces'
 import AddAndRemoveButton from '@/components/molecule/AddAndRemoveButton'
 
 const ProductCard = (props: { product: Product, amount: number }) => {
   const {Meta} = Card
   const [imageLoaded, setImageLoaded] = useState(false)
-  const dispatch = useDispatch()
-
-  const [add, setAdd] = useState(0)
-
-  const addOneProduct = (product: Product): void => {
-    setAdd(add + 1)
-    const basketProduct: BasketProduct = { amount: 1, id: product.id, name: product.name, price: product.price }
-    dispatch(addProduct(basketProduct))
-  }
-
-  const removeOneProduct = (product: Product): void => {
-    setAdd(add - 1)
-    const basketProduct: BasketProduct = { amount: -1, id: product.id, name: product.name, price: product.price }
-    dispatch(removeProduct(basketProduct))
-  }
 
   return <Card
     size="small"

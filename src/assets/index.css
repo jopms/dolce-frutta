@@ -47,4 +47,14 @@
         margin: 0;
         font-size: 1rem;
     }
+
+    .spin-text {
+        margin-top: 3rem;
+    }
+
+    .spin-text .ant-spin-text {
+        color: grey;
+        margin-top: 1.75rem;
+        margin-left: 1rem;
+    }
 }
